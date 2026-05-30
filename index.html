@@ -643,7 +643,7 @@ function _renderKadPertandingan(senarai){
     var tarikhTeks='';
     if(p.tarikhMula){tarikhTeks=fmtTarikh(p.tarikhMula);}
     if(p.tarikhTamat&&p.tarikhTamat!==p.tarikhMula){tarikhTeks+=' — '+fmtTarikh(p.tarikhTamat);}
-    return '<div class="kad-ptd" onclick="semakKodTerus(\'+p.kod+\',this)">'+
+    return '<div class="kad-ptd" onclick="semakKodTerus(\'' + p.kod + '\',this)">'+
       '<div class="kad-ptd-header">'+
       '<span class="badge '+statusKls+'">'+statusTeks+'</span>'+
       '<i class="fa-solid fa-arrow-right kad-ptd-arrow"></i>'+
