@@ -83,20 +83,16 @@ body{font-family:var(--font);background:var(--g100);color:var(--gelap);-webkit-f
 */
 .hero-grid{
   position:relative;z-index:1;
-  max-width:1100px;margin:0 auto;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  grid-template-areas:"tajuk carian";
-  column-gap:64px;
-  align-items:center;
+  max-width:860px;margin:0 auto;
+  display:flex;flex-direction:column;
+  align-items:center;text-align:center;
 }
-.hero-tajuk-area{grid-area:tajuk;}
-.hero-carian-area{grid-area:carian;}
+.hero-tajuk-area{width:100%;}
 
 .hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(26,115,232,0.2);border:1px solid rgba(26,115,232,0.3);color:var(--biru-cerah);padding:5px 14px;border-radius:var(--r-bulat);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;}
 .hero-tajuk{font-size:2.6rem;font-weight:800;color:white;line-height:1.15;margin-bottom:14px;letter-spacing:-1.5px;}
 .hero-tajuk span{background:linear-gradient(135deg,var(--biru-cerah),#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-sub{font-size:0.95rem;color:rgba(255,255,255,0.5);line-height:1.7;max-width:420px;}
+.hero-sub{font-size:0.95rem;color:rgba(255,255,255,0.5);line-height:1.7;max-width:560px;margin:0 auto;}
 
 /* ══ BORANG CARIAN ══ */
 .borang-carian{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.13);border-radius:var(--r-xl);padding:28px;backdrop-filter:blur(20px);margin-bottom:8px;}
@@ -117,14 +113,7 @@ body{font-family:var(--font);background:var(--g100);color:var(--gelap);-webkit-f
 /* Responsive 860px */
 @media(max-width:860px){
   .hero{padding:44px 20px 72px;}
-  .hero-grid{
-    grid-template-columns:1fr;
-    grid-template-areas:"tajuk" "carian";
-    row-gap:28px;text-align:center;
-  }
-  .hero-sub{max-width:100%;}
   .hero-tajuk{font-size:2rem;}
-  .hero-tag{margin-left:auto;margin-right:auto;}
 }
 
 /* Responsive 600px */
@@ -292,6 +281,29 @@ body{font-family:var(--font);background:var(--g100);color:var(--gelap);-webkit-f
 /* ══ PROGRESS BAR AUTO REFRESH ══ */
 .refresh-bar{height:3px;background:var(--biru);transition:width 1s linear;border-radius:0 3px 3px 0;}
 .refresh-track{height:3px;background:rgba(26,115,232,0.15);position:sticky;top:56px;z-index:99;}
+
+/* ══ PERTANDINGAN CARDS ══ */
+.seksyen-pertandingan{background:white;padding:32px 20px 44px;border-top:1px solid var(--g200);}
+.grid-ptd-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.grid-ptd-tajuk{font-size:1.05rem;font-weight:800;color:var(--gelap);}
+.grid-pertandingan{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.kad-ptd{background:white;border:1.5px solid var(--g200);border-radius:var(--r-xl);padding:22px;cursor:pointer;transition:var(--trans);display:flex;flex-direction:column;gap:8px;}
+.kad-ptd:hover{border-color:var(--biru);box-shadow:0 8px 24px rgba(26,115,232,0.12);transform:translateY(-2px);}
+.kad-ptd-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.kad-ptd-nama{font-size:0.95rem;font-weight:800;color:var(--gelap);line-height:1.4;flex:1;}
+.kad-ptd-tarikh{font-size:0.78rem;color:var(--g400);display:flex;align-items:center;gap:5px;}
+.kad-ptd-stats{display:flex;gap:14px;margin-top:6px;padding-top:10px;border-top:1px solid var(--g200);}
+.kad-ptd-stat{font-size:0.78rem;color:var(--g500);display:flex;align-items:center;gap:4px;}
+.kad-ptd-stat i{color:var(--g300);font-size:0.7rem;}
+.kad-ptd-skeleton{height:130px;background:linear-gradient(90deg,var(--g100) 25%,var(--g200) 50%,var(--g100) 75%);background-size:400% 100%;border-radius:var(--r-xl);animation:shimmer 1.5s infinite;}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.loading-tab{text-align:center;padding:48px 20px;}
+.kad-ptd-footer{font-size:0.78rem;color:var(--biru);font-weight:600;display:flex;align-items:center;gap:5px;margin-top:2px;opacity:0.8;}
+.kad-ptd:hover .kad-ptd-footer{opacity:1;}
+.kad-ptd.memuat{opacity:0.6;pointer-events:none;}
+.kad-ptd.memuat::after{content:'';display:block;width:18px;height:18px;border:2.5px solid rgba(26,115,232,0.3);border-top-color:var(--biru);border-radius:50%;animation:spin 0.7s linear infinite;position:absolute;top:50%;right:20px;transform:translateY(-50%);}
+.kad-ptd{position:relative;}
+.loading-tab .spinner{width:36px;height:36px;border-width:3px;margin:0 auto 12px;}
 </style>
 </head>
 <body>
@@ -306,13 +318,13 @@ body{font-family:var(--font);background:var(--g100);color:var(--gelap);-webkit-f
     <a id="btn-login-pasukan" href="#" target="_blank" rel="noopener"
        class="btn-navbar-login btn-navbar-pasukan dilumpuhkan"
        title="Portal Pasukan — Akan diaktifkan tidak lama lagi">
-      <span class="btn-navbar-ikon">🛡️</span>
+      <span class="btn-navbar-ikon">Pasukan</span>
       <span class="btn-navbar-teks">Pasukan</span>
     </a>
     <a id="btn-login-admin" href="#" target="_blank" rel="noopener"
        class="btn-navbar-login btn-navbar-admin dilumpuhkan"
        title="Panel Admin — Akan diaktifkan tidak lama lagi">
-      <span class="btn-navbar-ikon">📜</span>
+      <span class="btn-navbar-ikon">Admin</span>
       <span class="btn-navbar-teks">Admin</span>
     </a>
   </div>
@@ -344,40 +356,22 @@ body{font-family:var(--font);background:var(--g100);color:var(--gelap);-webkit-f
         <p class="hero-sub">Semak keputusan, startlist dan jadual acara terkini. Pilih pertandingan dari senarai atau imbas QR Kod untuk akses segera.</p>
       </div>
 
-      <!-- Borang Carian -->
-      <div class="hero-carian-area">
-        <div class="borang-carian">
-          <div class="borang-carian-tajuk">
-            <i class="fa-solid fa-magnifying-glass" style="color:var(--biru-cerah);"></i> Semak Keputusan
-          </div>
-          <div class="borang-carian-sub">Pilih pertandingan atau masukkan kod secara manual</div>
-
-          <select class="dropdown-ptd" id="dropdown-ptd" onchange="_onPilihDropdown(this)">
-            <option value="">⏳ Memuatkan senarai pertandingan...</option>
-          </select>
-          <div id="hint-dropdown" style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-bottom:4px;min-height:18px;"></div>
-
-          <div class="pemisah-atau">atau masukkan kod</div>
-
-          <input type="text" id="input-kod-awam" class="input-kod"
-            placeholder="Cth: AKUATIKPHG26" maxlength="20" autocomplete="off"
-            oninput="_onInputKod(this)">
-
-          <button class="btn-cari" id="btn-semak" onclick="semakKeputusan()">
-            <i class="fa-solid fa-magnifying-glass"></i> Papar Keputusan
-          </button>
-
-          <!-- FIX: display:none sahaja — tiada display:flex dalam inline -->
-          <div id="msg-error" style="display:none;margin-top:12px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:var(--r-md);padding:10px 14px;color:#FCA5A5;font-size:0.85rem;align-items:center;gap:8px;"></div>
-        </div>
-      </div>
-
     </div><!-- /hero-grid -->
 
-    <div class="stat-landing">
-      <div class="stat-l-item"><div class="stat-l-no" id="sl-ptd">—</div><div class="stat-l-label">Pertandingan Aktif</div></div>
-      <div class="stat-l-item"><div class="stat-l-no" id="sl-pasukan">—</div><div class="stat-l-label">Pasukan Berdaftar</div></div>
-      <div class="stat-l-item"><div class="stat-l-no" id="sl-acara">—</div><div class="stat-l-label">Acara Tersedia</div></div>
+  </div>
+
+  <!-- ══ SENARAI PERTANDINGAN ══ -->
+  <div class="seksyen-pertandingan">
+    <div class="kandungan">
+      <div class="grid-ptd-header">
+        <div class="grid-ptd-tajuk">Pertandingan Aktif</div>
+        <span id="grid-ptd-count" class="badge badge-ok" style="display:none;"></span>
+      </div>
+      <div id="grid-pertandingan">
+        <div class="kad-ptd-skeleton"></div>
+        <div class="kad-ptd-skeleton"></div>
+        <div class="kad-ptd-skeleton"></div>
+      </div>
     </div>
   </div>
 
@@ -593,15 +587,16 @@ body{font-family:var(--font);background:var(--g100);color:var(--gelap);-webkit-f
 
 <script>
 // ══════════════════════════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════════════════════════
-// ══════════════════════════════════════════════════════════════
-//  KONFIGURASI — tukar kepada Deployment ID anda
+//  KONFIGURASI
 // ══════════════════════════════════════════════════════════════
 const GAS_URL='https://script.google.com/macros/s/AKfycby979FVV53uOKia7kVkMZXEKpjNdtxWtF0PcfQcBDSdNVbGNMVTaJF_QIXpHc_NEryY2Q/exec';
 
-let KOD_SEMASA='',DATA=null,TIMER_REFRESH=null,MASA_MUAT=null;
-let TIMER_COUNTDOWN=null,CARIAN_SEMASA='',TAB_SEMASA='keputusan';
+// ══════════════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════════════
+let KOD_SEMASA='',DATA=null,DATA_TAB={startlist:null,jadual:null};
+let TIMER_REFRESH=null,MASA_MUAT=null,TIMER_COUNTDOWN=null;
+let CARIAN_SEMASA='',TAB_SEMASA='keputusan';
 const TEMPOH_REFRESH=300;
 let BAKI_REFRESH=TEMPOH_REFRESH;
 
@@ -609,46 +604,90 @@ let BAKI_REFRESH=TEMPOH_REFRESH;
 //  INIT
 // ══════════════════════════════════════════════════════════════
 window.onload=function(){
+  // Fetch landing data — render competition cards
   fetch(GAS_URL+'?action=landing')
     .then(function(r){return r.json();})
     .then(function(d){
-      if(!d)return;
-      document.getElementById('sl-ptd').textContent=d.pertandingan||0;
-      document.getElementById('sl-pasukan').textContent=d.pasukan||0;
-      document.getElementById('sl-acara').textContent=d.acara||0;
-      var dd=document.getElementById('dropdown-ptd');
-      var senarai=d.senarai||[];
-      if(!senarai.length){
-        dd.innerHTML='<option value="">— Tiada pertandingan aktif —</option>';
-      }else{
-        dd.innerHTML='<option value="">— Pilih pertandingan —</option>'+
-          senarai.map(function(p){
-            return '<option value="'+p.kod+'">'+p.nama+(p.tarikhMula?'  •  '+p.tarikhMula:'')+'</option>';
-          }).join('');
-        if(senarai.length===1){
-          dd.value=senarai[0].kod;
-          document.getElementById('hint-dropdown').textContent='✓ 1 pertandingan aktif — dipilih secara automatik';
-          document.getElementById('input-kod-awam').value=senarai[0].kod;
-        }else{
-          document.getElementById('hint-dropdown').textContent=senarai.length+' pertandingan aktif tersedia';
-        }
-      }
+      _renderKadPertandingan(d.senarai||[]);
       _setupLoginBtns(d.pasukanUrl||'',d.adminUrl||'');
     })
     .catch(function(){
-      document.getElementById('dropdown-ptd').innerHTML='<option value="">— Gagal memuatkan. Masukkan kod manual —</option>';
+      document.getElementById('grid-pertandingan').innerHTML=
+        '<div class="tiada-data"><div style="font-size:2rem;margin-bottom:8px;">⚠️</div>'+
+        '<div style="font-weight:600;margin-bottom:4px;">Gagal memuatkan senarai</div>'+
+        '<div style="font-size:0.875rem;color:var(--g400);">Masukkan kod pertandingan secara manual.</div></div>';
     });
 
-  var params=new URLSearchParams(window.location.search);
-  var kodParam=params.get('kod')||params.get('code')||params.get('k');
-  if(kodParam){
-    document.getElementById('input-kod-awam').value=kodParam.toUpperCase();
-    semakKeputusan();
-  }
-  document.getElementById('input-kod-awam').addEventListener('keydown',function(e){
-    if(e.key==='Enter')semakKeputusan();
-  });
+  // Semak URL hash — auto-load pertandingan terakhir
+  var hash=window.location.hash.replace('#','').trim().toUpperCase();
+  if(hash){semakKodTerus(hash,null);}
 };
+
+// ══════════════════════════════════════════════════════════════
+//  RENDER KAD PERTANDINGAN
+// ══════════════════════════════════════════════════════════════
+function _renderKadPertandingan(senarai){
+  var grid=document.getElementById('grid-pertandingan');
+  var count=document.getElementById('grid-ptd-count');
+  if(!senarai||!senarai.length){
+    grid.innerHTML='<div class="tiada-data"><div style="font-size:2rem;margin-bottom:8px;">🏆</div>'+
+      '<div style="font-weight:600;margin-bottom:4px;">Tiada Pertandingan Aktif</div>'+
+      '<div style="font-size:0.875rem;color:var(--g400);">Masukkan kod pertandingan secara manual jika anda mempunyainya.</div></div>';
+    return;
+  }
+  count.textContent=senarai.length+' aktif';
+  count.style.display='inline-flex';
+  grid.innerHTML=senarai.map(function(p){
+    var statusKls=p.status==='AKTIF'?'badge-ok':'badge-info';
+    var statusTeks=p.status==='AKAN'?'AKAN DATANG':p.status||'AKTIF';
+    var tarikhTeks='';
+    if(p.tarikhMula){tarikhTeks=fmtTarikh(p.tarikhMula);}
+    if(p.tarikhTamat&&p.tarikhTamat!==p.tarikhMula){tarikhTeks+=' — '+fmtTarikh(p.tarikhTamat);}
+    return '<div class="kad-ptd" onclick="semakKodTerus(''+p.kod+'')">'+
+      '<div class="kad-ptd-header">'+
+      '<span class="badge '+statusKls+'">'+statusTeks+'</span>'+
+      '<i class="fa-solid fa-arrow-right kad-ptd-arrow"></i>'+
+      '</div>'+
+      '<div class="kad-ptd-nama">'+(p.nama||p.kod)+'</div>'+
+      (tarikhTeks?'<div class="kad-ptd-tarikh"><i class="fa-regular fa-calendar"></i> '+tarikhTeks+'</div>':'')+
+      '<div class="kad-ptd-stats">'+
+      '<span class="kad-ptd-stat"><i class="fa-solid fa-users"></i> '+(p.bilPasukan||0)+' pasukan</span>'+
+      '<span class="kad-ptd-stat"><i class="fa-solid fa-list"></i> '+(p.bilAcara||0)+' acara</span>'+
+      '</div>'+
+      '<div class="kad-ptd-footer"><i class="fa-solid fa-magnifying-glass"></i> Tekan untuk semak keputusan</div>'+
+      '</div>';
+  }).join('');
+}
+
+function semakKodTerus(kod,elKad){
+  if(!kod)return;
+  kod=kod.trim().toUpperCase();
+  // Tunjuk loading pada kad yang diklik
+  if(elKad){elKad.classList.add('memuat');}
+  document.querySelectorAll('.kad-ptd').forEach(function(k){k.style.pointerEvents='none';});
+
+  fetch(GAS_URL+'?action=semak&kod='+encodeURIComponent(kod))
+    .then(function(r){return r.json();})
+    .then(function(hasil){
+      document.querySelectorAll('.kad-ptd').forEach(function(k){k.style.pointerEvents='';});
+      if(elKad){elKad.classList.remove('memuat');}
+      if(hasil.status==='OK'){
+        KOD_SEMASA=kod;DATA=hasil;
+        DATA_TAB={startlist:null,jadual:null};
+        DATA.startlist=null;DATA.jadual=null;
+        MASA_MUAT=new Date();
+        history.replaceState(null,'','#'+kod);
+        _paparKandungan();_mulaAutoRefresh();
+      }else{
+        tunjukToast(hasil.mesej||'Pertandingan tidak dijumpai.','error');
+      }
+    })
+    .catch(function(){
+      document.querySelectorAll('.kad-ptd').forEach(function(k){k.style.pointerEvents='';});
+      if(elKad){elKad.classList.remove('memuat');}
+      tunjukToast('Ralat sistem. Cuba sebentar lagi.','error');
+    });
+}
 
 function _setupLoginBtns(pasukanUrl,adminUrl){
   var btnP=document.getElementById('btn-login-pasukan');
@@ -659,47 +698,7 @@ function _setupLoginBtns(pasukanUrl,adminUrl){
   else{btnA.title='Panel Admin — Akan diaktifkan tidak lama lagi';}
 }
 
-function _onPilihDropdown(sel){
-  var kod=sel.value;
-  document.getElementById('input-kod-awam').value=kod;
-  sembunyiError();
-  document.getElementById('hint-dropdown').textContent=kod?'✓ '+kod+' dipilih':'';
-}
 
-function _onInputKod(input){
-  var val=input.value.toUpperCase();
-  input.value=val;
-  sembunyiError();
-  var dd=document.getElementById('dropdown-ptd'),sepadan=false;
-  for(var i=0;i<dd.options.length;i++){if(dd.options[i].value===val){dd.value=val;sepadan=true;break;}}
-  if(!sepadan)dd.value='';
-  document.getElementById('hint-dropdown').textContent=sepadan?'✓ '+val+' dijumpai dalam senarai':'';
-}
-
-// ══════════════════════════════════════════════════════════════
-//  SEMAK KEPUTUSAN
-// ══════════════════════════════════════════════════════════════
-function semakKeputusan(){
-  var kod=(document.getElementById('input-kod-awam').value||'').trim().toUpperCase();
-  if(!kod){tunjukError('Sila pilih pertandingan atau masukkan Kod Pertandingan.');return;}
-  var btn=document.getElementById('btn-semak');
-  btn.disabled=true;
-  btn.innerHTML='<span class="spinner"></span> Mencari...';
-  sembunyiError();
-  fetch(GAS_URL+'?action=semak&kod='+encodeURIComponent(kod))
-    .then(function(r){return r.json();})
-    .then(function(hasil){
-      btn.disabled=false;
-      btn.innerHTML='<i class="fa-solid fa-magnifying-glass"></i> Papar Keputusan';
-      if(hasil.status==='OK'){KOD_SEMASA=kod;DATA=hasil;MASA_MUAT=new Date();_paparKandungan();_mulaAutoRefresh();}
-      else{tunjukError(hasil.mesej||'Pertandingan tidak dijumpai.');_tunjukPlaceholder();}
-    })
-    .catch(function(){
-      btn.disabled=false;
-      btn.innerHTML='<i class="fa-solid fa-magnifying-glass"></i> Papar Keputusan';
-      tunjukError('Ralat sistem. Cuba sebentar lagi.');
-    });
-}
 
 // ══════════════════════════════════════════════════════════════
 //  PAPAR KANDUNGAN
@@ -714,14 +713,15 @@ function _paparKandungan(){
   document.getElementById('btn-refresh').style.display='flex';
   document.getElementById('refresh-track').style.display='block';
   document.getElementById('count-keputusan').textContent=(DATA.keputusan||[]).length;
-  document.getElementById('count-startlist').textContent=(DATA.startlist||[]).length;
-  document.getElementById('count-jadual').textContent=(DATA.jadual||[]).length;
-  _populatFilterKeputusan();_populatFilterStartlist();_populatFilterJadual();
-  paparKeputusan();_paparPingat();paparStartlist();paparJadual();_kemaskiniMasaLabel();
+  document.getElementById('count-startlist').textContent='↻';
+  document.getElementById('count-jadual').textContent='↻';
+  tukarTab('keputusan');
+  _populatFilterKeputusan();
+  paparKeputusan();_paparPingat();_kemaskiniMasaLabel();
 }
 
 // ══════════════════════════════════════════════════════════════
-//  TAB
+//  TAB — dengan lazy load untuk startlist dan jadual
 // ══════════════════════════════════════════════════════════════
 function tukarTab(tab){
   TAB_SEMASA=tab;
@@ -730,6 +730,44 @@ function tukarTab(tab){
     btn.classList.toggle('aktif',aktif);btn.setAttribute('aria-selected',aktif?'true':'false');
     panel.classList.toggle('aktif',aktif);
   });
+  // Lazy load tab yang belum dimuatkan
+  if(tab==='startlist'&&DATA_TAB.startlist===null){_muatTab('startlist');}
+  else if(tab==='jadual'&&DATA_TAB.jadual===null){_muatTab('jadual');}
+}
+
+function _muatTab(tab){
+  var namaDiv=tab==='startlist'?'kandungan-startlist':'kandungan-jadual';
+  document.getElementById(namaDiv).innerHTML=
+    '<div class="loading-tab">'+
+    '<div class="spinner spinner-biru" style="width:36px;height:36px;border-width:3px;margin:0 auto 12px;"></div>'+
+    '<div style="color:var(--g400);font-weight:600;">Memuatkan '+tab+'...</div></div>';
+
+  fetch(GAS_URL+'?action=tab&kod='+encodeURIComponent(KOD_SEMASA)+'&tab='+tab)
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.status==='OK'){
+        DATA_TAB[tab]=d.data;
+        DATA[tab]=d.data;
+        if(tab==='startlist'){
+          document.getElementById('count-startlist').textContent=(d.data||[]).length;
+          _populatFilterStartlist();paparStartlist();
+        }else if(tab==='jadual'){
+          document.getElementById('count-jadual').textContent=(d.data||[]).length;
+          _populatFilterJadual();paparJadual();
+        }
+      }else{
+        document.getElementById(namaDiv).innerHTML=
+          '<div class="tiada-data"><div style="font-size:2rem;margin-bottom:8px;">⚠️</div>'+
+          '<div style="font-weight:600;margin-bottom:4px;">Gagal memuatkan data</div>'+
+          '<button onclick="_muatTab(''+tab+'')" style="margin-top:12px;padding:8px 18px;background:var(--biru);color:white;border:none;border-radius:var(--r-md);font-family:var(--font);font-weight:600;cursor:pointer;font-size:0.85rem;">Cuba Semula</button></div>';
+      }
+    })
+    .catch(function(){
+      document.getElementById(namaDiv).innerHTML=
+        '<div class="tiada-data"><div style="font-size:2rem;margin-bottom:8px;">❌</div>'+
+        '<div style="font-weight:600;margin-bottom:4px;">Ralat rangkaian</div>'+
+        '<button onclick="_muatTab(''+tab+'')" style="margin-top:12px;padding:8px 18px;background:var(--biru);color:white;border:none;border-radius:var(--r-md);font-family:var(--font);font-weight:600;cursor:pointer;font-size:0.85rem;">Cuba Semula</button></div>';
+    });
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -951,6 +989,7 @@ function _kemaskiniMasaLabel(){
   if(el)el.textContent=teks;if(el2)el2.textContent=teks;
   if(el)el.style.color=BAKI_REFRESH<30?'rgba(255,255,255,0.8)':'rgba(255,255,255,0.4)';
 }
+
 function muatSemula(){
   if(!KOD_SEMASA)return;_stopAutoRefresh();
   var btn=document.getElementById('btn-refresh');btn.classList.add('memutar');btn.disabled=true;
@@ -959,13 +998,18 @@ function muatSemula(){
     .then(function(hasil){
       btn.classList.remove('memutar');btn.disabled=false;
       if(hasil.status==='OK'){
-        DATA=hasil;MASA_MUAT=new Date();
+        DATA=hasil;
+        // Reset tab data — akan dimuatkan semula apabila diklik
+        DATA_TAB={startlist:null,jadual:null};
+        DATA.startlist=null;DATA.jadual=null;
+        MASA_MUAT=new Date();
         document.getElementById('count-keputusan').textContent=(DATA.keputusan||[]).length;
-        document.getElementById('count-startlist').textContent=(DATA.startlist||[]).length;
-        document.getElementById('count-jadual').textContent=(DATA.jadual||[]).length;
-        _populatFilterKeputusan();_populatFilterStartlist();_populatFilterJadual();
-        paparKeputusan();_paparPingat();paparStartlist();paparJadual();_mulaAutoRefresh();
-        tunjukToast('Keputusan dikemaskini!','ok');
+        document.getElementById('count-startlist').textContent='↻';
+        document.getElementById('count-jadual').textContent='↻';
+        _populatFilterKeputusan();paparKeputusan();_paparPingat();
+        // Jika tab aktif bukan keputusan, muat semula tab tersebut
+        if(TAB_SEMASA==='startlist'||TAB_SEMASA==='jadual'){_muatTab(TAB_SEMASA);}
+        _mulaAutoRefresh();tunjukToast('Keputusan dikemaskini!','ok');
       }else{tunjukToast('Gagal muat semula.','error');_mulaAutoRefresh();}
     })
     .catch(function(){btn.classList.remove('memutar');btn.disabled=false;tunjukToast('Ralat rangkaian.','error');_mulaAutoRefresh();});
@@ -975,16 +1019,16 @@ function muatSemula(){
 //  TUKAR KOD / PLACEHOLDER
 // ══════════════════════════════════════════════════════════════
 function tukarKod(){
-  _stopAutoRefresh();KOD_SEMASA='';DATA=null;CARIAN_SEMASA='';TAB_SEMASA='keputusan';tukarTab('keputusan');
+  _stopAutoRefresh();KOD_SEMASA='';DATA=null;
+  DATA_TAB={startlist:null,jadual:null};
+  CARIAN_SEMASA='';TAB_SEMASA='keputusan';tukarTab('keputusan');
+  history.replaceState(null,'',window.location.pathname);
   document.getElementById('bahagian-keputusan').style.display='none';
   document.getElementById('bahagian-placeholder').style.display='none';
   document.getElementById('bahagian-landing').style.display='block';
   document.getElementById('teks-kemaskini').style.display='none';
   document.getElementById('btn-refresh').style.display='none';
   document.getElementById('refresh-track').style.display='none';
-  document.getElementById('input-kod-awam').value='';
-  document.getElementById('dropdown-ptd').value='';
-  document.getElementById('hint-dropdown').textContent='';
 }
 function _tunjukPlaceholder(){
   document.getElementById('bahagian-landing').style.display='none';
@@ -996,8 +1040,7 @@ function _tunjukPlaceholder(){
 //  HELPERS
 // ══════════════════════════════════════════════════════════════
 function fmtTarikh(v){if(!v)return'';var d=new Date(v);if(isNaN(d))return v;return d.toLocaleDateString('ms-MY',{day:'2-digit',month:'2-digit',year:'numeric'});}
-function tunjukError(mesej){var el=document.getElementById('msg-error');el.innerHTML='<i class="fa-solid fa-circle-exclamation"></i> '+mesej;el.style.display='flex';}
-function sembunyiError(){document.getElementById('msg-error').style.display='none';}
+
 function tunjukToast(mesej,jenis){
   var ikon={ok:'✅',error:'❌',warning:'⚠️',info:'ℹ️'};
   var c=document.getElementById('toast-container'),t=document.createElement('div');
@@ -1007,4 +1050,3 @@ function tunjukToast(mesej,jenis){
 }
 </script>
 </body>
-</html>
