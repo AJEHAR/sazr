@@ -619,7 +619,7 @@ window.onload=function(){
     });
 
   // Semak URL hash — auto-load pertandingan terakhir
-  var hash=window.location.hash.replace('#','').trim().toUpperCase();
+  var hash=window.location.hash.replace('#','').trim();
   if(hash){semakKodTerus(hash,null);}
 };
 
@@ -661,7 +661,7 @@ function _renderKadPertandingan(senarai){
 
 function semakKodTerus(kod,elKad){
   if(!kod)return;
-  kod=kod.trim().toUpperCase();
+  kod=kod.trim();
   // Tunjuk loading pada kad yang diklik
   if(elKad){elKad.classList.add('memuat');}
   document.querySelectorAll('.kad-ptd').forEach(function(k){k.style.pointerEvents='none';});
