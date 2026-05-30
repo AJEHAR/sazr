@@ -304,6 +304,51 @@ body{font-family:var(--font);background:var(--g100);color:var(--gelap);-webkit-f
 .kad-ptd.memuat::after{content:'';display:block;width:18px;height:18px;border:2.5px solid rgba(26,115,232,0.3);border-top-color:var(--biru);border-radius:50%;animation:spin 0.7s linear infinite;position:absolute;top:50%;right:20px;transform:translateY(-50%);}
 .kad-ptd{position:relative;}
 .loading-tab .spinner{width:36px;height:36px;border-width:3px;margin:0 auto 12px;}
+
+/* ══ NAV DRAWER (mobile slide panel) ══ */
+.nav-hamburger{display:none;background:none;border:1px solid rgba(255,255,255,0.15);border-radius:var(--r-md);color:rgba(255,255,255,0.8);padding:7px 11px;cursor:pointer;font-size:1rem;flex-shrink:0;}
+.nav-drawer{display:block;position:fixed;inset:0;z-index:999;pointer-events:none;}
+.nav-drawer.buka{pointer-events:all;}
+.nav-drawer-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0);transition:background 0.3s;}
+.nav-drawer.buka .nav-drawer-backdrop{background:rgba(0,0,0,0.55);}
+.nav-drawer-panel{position:absolute;top:0;right:0;width:260px;height:100%;background:#131C2B;border-left:1px solid rgba(255,255,255,0.08);transform:translateX(100%);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;}
+.nav-drawer.buka .nav-drawer-panel{transform:translateX(0);}
+.nav-drawer-header{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.nav-drawer-tajuk{font-weight:800;color:white;font-size:0.95rem;display:flex;align-items:center;gap:8px;}
+.nav-drawer-tutup{background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:1.1rem;padding:4px;line-height:1;}
+.nav-drawer-bahagian{padding:16px 20px 6px;font-size:0.68rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.08em;}
+.nav-drawer-item{display:flex;align-items:center;gap:12px;padding:14px 20px;text-decoration:none;font-weight:600;font-size:0.9rem;transition:background 0.15s;border-bottom:1px solid rgba(255,255,255,0.05);}
+.nav-drawer-item:active{background:rgba(255,255,255,0.04);}
+.nav-drawer-item.pasukan{color:#6EE7B7;}
+.nav-drawer-item.admin{color:#FCD34D;}
+.nav-drawer-item.dilumpuhkan{opacity:0.3;pointer-events:none;}
+.nav-drawer-item i{width:18px;text-align:center;font-size:0.85rem;}
+@media(max-width:768px){
+  .navbar-login-btns{display:none;}
+  .nav-hamburger{display:flex;align-items:center;}
+}
+@media(min-width:769px){
+  .nav-drawer{display:none !important;}
+}
+
+/* ══ STARTLIST V2 — Jadual Ringkas ══ */
+.sl2-acara{background:white;border:1px solid var(--g200);border-radius:var(--r-xl);margin-bottom:16px;overflow:hidden;}
+.sl2-kepala{display:flex;align-items:flex-start;justify-content:space-between;padding:16px 18px 14px;gap:12px;border-bottom:1px solid var(--g200);}
+.sl2-nama{font-size:0.95rem;font-weight:800;color:var(--gelap);line-height:1.3;}
+.sl2-meta{font-size:0.75rem;color:var(--g400);margin-top:3px;font-family:var(--mono);}
+.sl2-info{font-size:0.72rem;color:var(--g400);white-space:nowrap;padding-top:2px;flex-shrink:0;}
+.sl2-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.sl2-jadual{width:100%;border-collapse:collapse;min-width:280px;}
+.sl2-jadual th{background:#F8FAFC;color:var(--g500);font-size:0.68rem;font-weight:700;letter-spacing:0.06em;padding:8px 14px;text-align:left;border-bottom:2px solid var(--g200);}
+.sl2-jadual th.tc,.sl2-jadual td.tc{text-align:center;}
+.sl2-jadual td{padding:10px 14px;border-bottom:1px solid #F1F5F9;vertical-align:middle;}
+.sl2-jadual tr:last-child td{border-bottom:none;}
+.sl2-jadual tr:hover td{background:#FAFBFF;}
+.sl2-jadual .w55{width:55px;}.sl2-jadual .w65{width:65px;}.sl2-jadual .w70{width:70px;}
+.chip-giliran{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--biru);color:white;font-weight:800;font-size:0.9rem;}
+.chip-bib-sm{display:inline-block;background:#F1F5F9;color:#475569;font-family:var(--mono);font-weight:700;font-size:0.75rem;padding:3px 8px;border-radius:4px;letter-spacing:0.03em;}
+.sl2-pnama{font-weight:700;font-size:0.88rem;color:var(--gelap);}
+.sl2-ppasukan{font-size:0.73rem;color:var(--g400);margin-top:1px;}
 </style>
 </head>
 <body>
@@ -318,16 +363,21 @@ body{font-family:var(--font);background:var(--g100);color:var(--gelap);-webkit-f
     <a id="btn-login-pasukan" href="#" target="_blank" rel="noopener"
        class="btn-navbar-login btn-navbar-pasukan dilumpuhkan"
        title="Portal Pasukan — Akan diaktifkan tidak lama lagi">
-      <span class="btn-navbar-ikon">Pasukan</span>
+      <i class="fa-solid fa-users" style="font-size:0.85rem;"></i>
       <span class="btn-navbar-teks">Pasukan</span>
     </a>
     <a id="btn-login-admin" href="#" target="_blank" rel="noopener"
        class="btn-navbar-login btn-navbar-admin dilumpuhkan"
        title="Panel Admin — Akan diaktifkan tidak lama lagi">
-      <span class="btn-navbar-ikon">Admin</span>
+      <i class="fa-solid fa-gear" style="font-size:0.85rem;"></i>
       <span class="btn-navbar-teks">Admin</span>
     </a>
   </div>
+
+  <!-- Hamburger — mobile sahaja -->
+  <button class="nav-hamburger" id="nav-hamburger" onclick="toggleNavDrawer()" aria-label="Menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
 
   <!-- Kemaskini — hanya papar semasa lihat keputusan -->
   <div class="navbar-refresh">
@@ -690,12 +740,28 @@ function semakKodTerus(kod,elKad){
 }
 
 function _setupLoginBtns(pasukanUrl,adminUrl){
+  // Desktop buttons
   var btnP=document.getElementById('btn-login-pasukan');
   var btnA=document.getElementById('btn-login-admin');
-  if(pasukanUrl){btnP.href=pasukanUrl;btnP.classList.remove('dilumpuhkan');btnP.title='Buka Portal Pasukan dalam tab baru';}
-  else{btnP.title='Portal Pasukan — Akan diaktifkan tidak lama lagi';}
-  if(adminUrl){btnA.href=adminUrl;btnA.classList.remove('dilumpuhkan');btnA.title='Buka Panel Admin dalam tab baru';}
-  else{btnA.title='Panel Admin — Akan diaktifkan tidak lama lagi';}
+  // Mobile drawer items
+  var drwP=document.getElementById('nav-drawer-pasukan');
+  var drwA=document.getElementById('nav-drawer-admin');
+  if(pasukanUrl){
+    btnP.href=pasukanUrl;btnP.classList.remove('dilumpuhkan');
+    if(drwP){drwP.href=pasukanUrl;drwP.classList.remove('dilumpuhkan');}
+  }
+  if(adminUrl){
+    btnA.href=adminUrl;btnA.classList.remove('dilumpuhkan');
+    if(drwA){drwA.href=adminUrl;drwA.classList.remove('dilumpuhkan');}
+  }
+}
+
+// ── Nav Drawer ──
+function toggleNavDrawer(){
+  document.getElementById('nav-drawer').classList.toggle('buka');
+}
+function tutupNavDrawer(){
+  document.getElementById('nav-drawer').classList.remove('buka');
 }
 
 
@@ -888,31 +954,64 @@ function toggleJadual(btn){
 }
 
 // ══════════════════════════════════════════════════════════════
-//  PAPAR STARTLIST
+//  PAPAR STARTLIST — jadual ringkas
 // ══════════════════════════════════════════════════════════════
 function paparStartlist(){
-  var startlist=DATA.startlist||[],filterKat=document.getElementById('filter-startlist-kategori').value;
+  var startlist=DATA.startlist||[];
+  var filterKat=document.getElementById('filter-startlist-kategori').value;
   var filterAcara=document.getElementById('filter-startlist-acara').value;
   var carian=(document.getElementById('carian-startlist').value||'').toLowerCase();
   var tapis=startlist;
   if(filterKat)tapis=tapis.filter(function(a){return a.kodKategori===filterKat;});
   if(filterAcara)tapis=tapis.filter(function(a){return a.kodAcara===filterAcara;});
   var div=document.getElementById('kandungan-startlist');
-  if(!tapis.length){div.innerHTML='<div class="tiada-data"><div style="font-size:3rem;margin-bottom:12px;">📋</div><div style="font-weight:700;font-size:1rem;margin-bottom:6px;">Startlist Belum Tersedia</div><div style="color:var(--g400);font-size:0.875rem;">Giliran peserta akan dipaparkan apabila admin telah menetapkan susunan pertandingan.</div></div>';return;}
+  if(!tapis.length){
+    div.innerHTML='<div class="tiada-data"><div style="font-size:3rem;margin-bottom:12px;">📋</div>'+
+      '<div style="font-weight:700;font-size:1rem;margin-bottom:6px;">Startlist Belum Tersedia</div>'+
+      '<div style="color:var(--g400);font-size:0.875rem;">Susunan peserta akan dipaparkan apabila telah ditetapkan.</div></div>';
+    return;
+  }
   div.innerHTML=tapis.map(function(acara){
     var peserta=acara.peserta;
-    if(carian){peserta=peserta.filter(function(p){return(p.NAMA_PESERTA||'').toLowerCase().includes(carian)||(p.NAMA_PASUKAN||'').toLowerCase().includes(carian);});if(!peserta.length)return'';}
-    var jenisKls=acara.jenisAcara==='INDIVIDU'?'badge-ok':'badge-info';
-    var sistemBadge=acara.sistem==='SARINGAN'?'<span class="badge badge-info"><i class="fa-solid fa-water" style="font-size:0.6rem;"></i> SARINGAN / LORONG</span>':'<span class="badge badge-neutral"><i class="fa-solid fa-list-ol" style="font-size:0.6rem;"></i> GILIRAN</span>';
-    var colGiliran=acara.isLorong?'LORONG':'GILIRAN';
-    var headerSaringan=acara.sistem==='SARINGAN'?'<th style="text-align:center;width:70px">SARINGAN</th>':'';
-    var tbody=peserta.map(function(p){
+    if(carian){
+      peserta=peserta.filter(function(p){
+        return(p.NAMA_PESERTA||'').toLowerCase().includes(carian)||(p.NAMA_PASUKAN||'').toLowerCase().includes(carian);
+      });
+      if(!peserta.length)return'';
+    }
+    var adaSaringan=acara.sistem==='SARINGAN';
+    var labelGiliran=acara.isLorong?'LORONG':'GILIRAN';
+    // Header ringkas
+    var meta=acara.kodAcara+(acara.tarikh?'  ·  '+fmtTarikh(acara.tarikh):'')+(acara.masa?'  ·  '+acara.masa:'');
+    var kepala='<div class="sl2-kepala">'+
+      '<div><div class="sl2-nama">'+acara.namaAcara+'</div>'+
+      '<div class="sl2-meta">'+meta+'</div></div>'+
+      '<div class="sl2-info">'+acara.bilPeserta+' peserta · '+acara.bilPasukan+' pasukan</div>'+
+      '</div>';
+    // Jadual ringkas — max 4 kolum
+    var thead='<thead><tr>'+
+      (adaSaringan?'<th class="tc w55">SARINGAN</th>':'')+
+      '<th class="tc w65">'+labelGiliran+'</th>'+
+      '<th class="tc w70">BIB</th>'+
+      '<th>PESERTA</th>'+
+      '</tr></thead>';
+    var tbody='<tbody>'+peserta.map(function(p){
       var noG=p.NO_GILIRAN||p.NO_LORONG||'—';
-      var saringanTd=acara.sistem==='SARINGAN'?'<td style="text-align:center;font-family:var(--mono);font-weight:700;color:var(--g500);">'+(p.NO_SARINGAN||'—')+'</td>':'';
-      return'<tr>'+saringanTd+'<td style="text-align:center;"><span class="no-giliran-chip">'+noG+'</span></td>'+(p.NO_BIB?'<td><span class="no-bib-chip">'+p.NO_BIB+'</span></td>':'<td style="color:var(--g400);">—</td>')+'<td style="font-weight:600;">'+(p.NAMA_PESERTA||'—')+'</td><td><div style="font-weight:600;font-size:0.85rem;">'+(p.NAMA_PASUKAN||'—')+'</div><div style="font-size:0.7rem;color:var(--g400);">'+(p.KOD_PASUKAN||'')+'</div></td><td><span class="badge badge-neutral">'+(p.KOD_KATEGORI||'—')+'</span></td>'+(p.JANTINA?'<td style="font-size:0.8rem;color:var(--g400);">'+p.JANTINA+'</td>':'<td>—</td>')+'</tr>';
-    }).join('');
-    return'<div class="startlist-seksyen"><div class="startlist-kepala"><div class="startlist-info"><div class="startlist-nama">'+acara.namaAcara+'</div><div class="startlist-meta">'+acara.kodAcara+(acara.tarikh?' • '+fmtTarikh(acara.tarikh):'')+(acara.masa?' • '+acara.masa:'')+'</div></div><div style="display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;">'+sistemBadge+'<span class="badge '+jenisKls+'">'+(acara.jenisAcara||'—')+'</span><span class="badge badge-neutral">'+acara.kodKategori+'</span></div></div><div style="font-size:0.8rem;color:var(--g400);margin-bottom:10px;">'+acara.bilPeserta+' peserta • '+acara.bilPasukan+' pasukan</div><div style="overflow-x:auto;border-radius:var(--r-md);border:1px solid var(--g200);"><table class="jadual"><thead><tr>'+headerSaringan+'<th style="text-align:center;width:70px">'+colGiliran+'</th><th style="width:70px">BIB</th><th>NAMA PESERTA</th><th>PASUKAN</th><th>KATEGORI</th><th>JANTINA</th></tr></thead><tbody>'+tbody+'</tbody></table></div></div>';
-  }).filter(function(s){return s;}).join('')||'<div class="tiada-data"><div style="font-size:2rem;margin-bottom:10px;">🔍</div><div style="font-weight:600;margin-bottom:4px;">Tiada hasil carian</div><div style="font-size:0.875rem;color:var(--g400);">Cuba carian yang berbeza</div></div>';
+      return'<tr>'+
+        (adaSaringan?'<td class="tc" style="font-family:var(--mono);font-weight:700;color:var(--g500);">'+(p.NO_SARINGAN||'—')+'</td>':'')+
+        '<td class="tc"><span class="chip-giliran">'+noG+'</span></td>'+
+        '<td class="tc">'+(p.NO_BIB?'<span class="chip-bib-sm">'+p.NO_BIB+'</span>':'<span style="color:var(--g300);">—</span>')+'</td>'+
+        '<td><div class="sl2-pnama">'+(p.NAMA_PESERTA||'—')+'</div>'+
+        '<div class="sl2-ppasukan">'+(p.NAMA_PASUKAN||'')+'</div></td>'+
+        '</tr>';
+    }).join('')+'</tbody>';
+    return'<div class="sl2-acara">'+kepala+
+      '<div class="sl2-table-wrap"><table class="sl2-jadual">'+thead+tbody+'</table></div>'+
+      '</div>';
+  }).filter(function(s){return s;}).join('')||
+  '<div class="tiada-data"><div style="font-size:2rem;margin-bottom:10px;">🔍</div>'+
+  '<div style="font-weight:600;margin-bottom:4px;">Tiada hasil carian</div>'+
+  '<div style="font-size:0.875rem;color:var(--g400);">Cuba carian yang berbeza</div></div>';
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -1049,4 +1148,28 @@ function tunjukToast(mesej,jenis){
   setTimeout(function(){t.classList.add('keluar');setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},300);},3000);
 }
 </script>
+
+<!-- ══ NAV DRAWER (mobile) ══ -->
+<div class="nav-drawer" id="nav-drawer">
+  <div class="nav-drawer-backdrop" onclick="tutupNavDrawer()"></div>
+  <div class="nav-drawer-panel">
+    <div class="nav-drawer-header">
+      <div class="nav-drawer-tajuk">
+        <i class="fa-solid fa-trophy" style="color:#60A5FA;"></i> SAZR
+      </div>
+      <button class="nav-drawer-tutup" onclick="tutupNavDrawer()" aria-label="Tutup menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="nav-drawer-bahagian">Portal</div>
+    <a id="nav-drawer-pasukan" href="#" target="_blank" rel="noopener"
+       class="nav-drawer-item pasukan dilumpuhkan">
+      <i class="fa-solid fa-users"></i> Portal Pasukan
+    </a>
+    <a id="nav-drawer-admin" href="#" target="_blank" rel="noopener"
+       class="nav-drawer-item admin dilumpuhkan">
+      <i class="fa-solid fa-gear"></i> Panel Admin
+    </a>
+  </div>
+</div>
 </body>
