@@ -759,14 +759,14 @@ function _muatTab(tab){
         document.getElementById(namaDiv).innerHTML=
           '<div class="tiada-data"><div style="font-size:2rem;margin-bottom:8px;">⚠️</div>'+
           '<div style="font-weight:600;margin-bottom:4px;">Gagal memuatkan data</div>'+
-          '<button onclick="_muatTab(''+tab+'')" style="margin-top:12px;padding:8px 18px;background:var(--biru);color:white;border:none;border-radius:var(--r-md);font-family:var(--font);font-weight:600;cursor:pointer;font-size:0.85rem;">Cuba Semula</button></div>';
+          '<button onclick="_muatTab(\'+tab+\')" style="margin-top:12px;padding:8px 18px;background:var(--biru);color:white;border:none;border-radius:var(--r-md);font-family:var(--font);font-weight:600;cursor:pointer;font-size:0.85rem;">Cuba Semula</button></div>';
       }
     })
     .catch(function(){
       document.getElementById(namaDiv).innerHTML=
         '<div class="tiada-data"><div style="font-size:2rem;margin-bottom:8px;">❌</div>'+
         '<div style="font-weight:600;margin-bottom:4px;">Ralat rangkaian</div>'+
-        '<button onclick="_muatTab(''+tab+'')" style="margin-top:12px;padding:8px 18px;background:var(--biru);color:white;border:none;border-radius:var(--r-md);font-family:var(--font);font-weight:600;cursor:pointer;font-size:0.85rem;">Cuba Semula</button></div>';
+        '<button onclick="_muatTab(\'+tab+\')" style="margin-top:12px;padding:8px 18px;background:var(--biru);color:white;border:none;border-radius:var(--r-md);font-family:var(--font);font-weight:600;cursor:pointer;font-size:0.85rem;">Cuba Semula</button></div>';
     });
 }
 
